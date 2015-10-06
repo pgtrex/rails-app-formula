@@ -57,6 +57,22 @@
       - user: {{ pillar['rails-app']['user'] }}
       - file: /srv/shared
 
+# RED-1823 Setup bin directory 
+/srv/shared/bin:
+  file.directory:
+    - user: {{ pillar['rails-app']['user'] }}
+    - group: {{ pillar['rails-app']['user'] }}
+    - mode: 0755
+    - makedirs: True
+    - source: salt://rails-app/files/app/shared/bin
+    - recurse:
+      - user
+      - group
+      - mode
+    - require:
+      - user: {{ pillar['rails-app']['user'] }}
+      - file: /srv/shared
+
 /srv/shared/log/index:
   file.directory:
     - user: {{ pillar['rails-app']['user'] }}
